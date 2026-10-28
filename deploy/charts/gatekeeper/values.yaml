@@ -1,0 +1,13 @@
+imagem: gatekeeper:latest
+pullPolicy: Never
+perfil: teste
+bucket: ""
+identityIssuer: http://zitadel-host:8080
+authorizationEndpoint: http://cerbos:3592
+authorizationUsername: cerbos
+authorizationPassword: cerbos-dev
+segredo:
+  banco: "Host=postgres-rw;Port=5432;Username=gatekeeper;Password=gatekeeper-dev;Database=gatekeeper;SSL Mode=Disable"
+  cache: "valkey:6379,password=valkey-dev,abortConnect=false"
+  wasabiChave: ""
+  wasabiSegredo: ""

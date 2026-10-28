@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" />
+		<PackageReference Include="xunit" />
+		<PackageReference Include="xunit.runner.visualstudio" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\src\gatekeeper.Api\gatekeeper.Api.csproj" />
+		<ProjectReference Include="..\..\src\gatekeeper.Application\gatekeeper.Application.csproj" />
+		<ProjectReference Include="..\..\src\gatekeeper.Domain\gatekeeper.Domain.csproj" />
+		<ProjectReference Include="..\..\src\gatekeeper.Infrastructure\gatekeeper.Infrastructure.csproj" />
+	</ItemGroup>
+
+</Project>

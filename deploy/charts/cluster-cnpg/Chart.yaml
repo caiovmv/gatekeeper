@@ -1,0 +1,6 @@
+apiVersion: v2
+name: cluster-cnpg
+description: Cluster Postgres da aplicacao e do Temporal
+type: application
+version: 0.1.0
+appVersion: "18.6"

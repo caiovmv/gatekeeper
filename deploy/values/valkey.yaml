@@ -1,0 +1,17 @@
+image:
+  tag: "9.1.3"
+auth:
+  enabled: true
+  aclConfig: |
+    user default on >valkey-dev ~* &* +@all
+dataStorage:
+  enabled: true
+  requestedSize: 1Gi
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+replica:
+  enabled: false
+metrics:
+  enabled: false

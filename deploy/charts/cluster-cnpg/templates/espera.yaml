@@ -1,0 +1,32 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: postgres-espera
+  annotations:
+    helm.sh/hook: post-install,post-upgrade
+    helm.sh/hook-weight: "5"
+    helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
+spec:
+  backoffLimit: 3
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: espera
+          image: {{ .Values.imagemCliente | quote }}
+          env:
+            - name: PGPASSWORD
+              value: {{ .Values.senhaAplicacao | quote }}
+          command:
+            - sh
+            - -c
+            - |
+              i=0
+              while [ "$i" -lt 60 ]; do
+                if pg_isready -h postgres-rw -p 5432 -U gatekeeper; then
+                  exit 0
+                fi
+                i=$((i + 1))
+                sleep 5
+              done
+              exit 1

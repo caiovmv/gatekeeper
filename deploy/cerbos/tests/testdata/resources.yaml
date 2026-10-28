@@ -1,0 +1,36 @@
+resources:
+  flowable_model:
+    kind: flowable_model
+    id: orquestrador
+    attr:
+      organization: org-1
+  flowable_instance:
+    kind: flowable_instance
+    id: orquestrador
+    attr:
+      organization: org-1
+  flowable_task:
+    kind: flowable_task
+    id: orquestrador
+    attr:
+      organization: org-1
+  flowable_decision:
+    kind: flowable_decision
+    id: orquestrador
+    attr:
+      organization: org-1
+  flowable_event:
+    kind: flowable_event
+    id: orquestrador
+    attr:
+      organization: org-1
+  flowable_worker_job:
+    kind: flowable_worker_job
+    id: orquestrador
+    attr:
+      organization: org-1
+  flowable_admin:
+    kind: flowable_admin
+    id: orquestrador
+    attr:
+      organization: org-1

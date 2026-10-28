@@ -1,0 +1,4 @@
+apiVersion: v2
+name: cerbos-policies
+description: Policies the local Cerbos reads from this repository.
+version: 0.1.0

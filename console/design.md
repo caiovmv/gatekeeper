@@ -36,7 +36,7 @@ Do not add a fourth breakpoint. Do not hide primary actions on the phone.
 ## Color and type
 
 - The first paint is dark. `--paper` is #070707, `--surface` is #141414, ink is #f5f5f5, muted is #8a8a8a. The accent and filled action are orange `#f97316`.
-- `html.light` inverts the paper to #f4f4f5 and keeps the same orange action. Theme is stored in `agent.theme`.
+- `html.light` inverts the paper to #f4f4f5 and keeps the same orange action. Theme is stored in `gatekeeper.theme`.
 - Focus is an `--accent` border. Status dots and meters use `--accent`.
 - Type is Inter, then Segoe UI, then the system sans. The family does not change between the three surfaces.
 - Colors are the variables in `src/index.css`: paper, surface, ink, muted, line, action, danger, warning, accent, rail, and hover.
@@ -76,7 +76,7 @@ Do not add a fourth breakpoint. Do not hide primary actions on the phone.
 
 ## Language
 
-The console speaks Portuguese (`pt-BR`) and English (`en`). The switch sits in the avatar menu and is stored in `agent.locale`. The first visit follows the browser language.
+The console speaks Portuguese (`pt-BR`) and English (`en`). The switch sits in the avatar menu and is stored in `gatekeeper.locale`. The first visit follows the browser language.
 
 Amounts are Brazilian real. `Intl.NumberFormat` writes `R$ 10,00` in Portuguese and `R$10.00` in English. Dates and times use `Intl.DateTimeFormat` with `dateStyle: "medium"` and, when a clock is useful, `timeStyle: "short"`. Whole counts use the locale grouping.
 
@@ -88,7 +88,7 @@ Do not format a price or a timestamp by hand.
 
 The landing is one page: masthead, title, lede, hairline, one figure, one filled action into the product, a short timeline, three paths as a list, and a language footer.
 
-The product is a dense cockpit without page scroll. Templates and agents show an AI face. Forms surface the error under the field. The report and the provider list are searchable, sortable grids. Advanced detail stays behind a click; a short fast-track action jumps to chain, rack, or player.
+The product is a dense cockpit without page scroll. Templates and gatekeepers show an AI face. Forms surface the error under the field. The report and the provider list are searchable, sortable grids. Advanced detail stays behind a click; a short fast-track action jumps to chain, rack, or player.
 
 The backoffice overview keeps its numbers, adds the usage chart, and lists recent audit as a timeline. Lists keep search, filters, skeleton, and the empty sentence. Forms keep the label, the error under the field, the toast, and the confirm dialog.
 

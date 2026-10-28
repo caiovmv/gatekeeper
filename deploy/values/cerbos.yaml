@@ -1,0 +1,24 @@
+replicaCount: 1
+volumes:
+  - name: policies
+    configMap:
+      name: cerbos-policies
+volumeMounts:
+  - name: policies
+    mountPath: /policies
+    readOnly: true
+cerbos:
+  httpPort: 3592
+  grpcPort: 3593
+  config:
+    server:
+      adminAPI:
+        enabled: true
+        adminCredentials:
+          username: cerbos
+          passwordHash: JDJiJDEwJERHZzFoc1lXZHczRjYzZUdEWU1zMXVMdWFtdDJhMTZrbUc2ZWZVUWN6aENoZHV6QVpoMW02
+    storage:
+      driver: disk
+      disk:
+        directory: /policies
+        watchForChanges: true

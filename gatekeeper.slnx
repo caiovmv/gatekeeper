@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/gatekeeper.Api/gatekeeper.Api.csproj" />
+    <Project Path="src/gatekeeper.Application/gatekeeper.Application.csproj" />
+    <Project Path="src/gatekeeper.Domain/gatekeeper.Domain.csproj" />
+    <Project Path="src/gatekeeper.Infrastructure/gatekeeper.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/gatekeeper.Tests/gatekeeper.Tests.csproj" />
+    <Project Path="tests/gatekeeper.Live/gatekeeper.Live.csproj" />
+  </Folder>
+</Solution>

@@ -1,0 +1,79 @@
+# Stack do gatekeeper. Contexto: Kubernetes do Docker Desktop.
+# Uma replica, storageClass padrao do cluster, sem ingress.
+helmDefaults:
+  wait: true
+  timeout: 900
+  createNamespace: true
+
+repositories:
+  - name: cnpg
+    url: https://cloudnative-pg.github.io/charts
+  - name: valkey
+    url: https://valkey.io/valkey-helm/
+  - name: temporal
+    url: https://go.temporal.io/helm-charts
+  - name: zitadel
+    url: https://charts.zitadel.com
+  - name: cerbos
+    url: https://download.cerbos.dev/helm-charts
+
+releases:
+  - name: cnpg
+    namespace: cnpg-system
+    chart: cnpg/cloudnative-pg
+    version: 0.29.1
+    values:
+      - values/cnpg.yaml
+
+  - name: valkey
+    namespace: gatekeeper
+    chart: valkey/valkey
+    version: 0.12.1
+    values:
+      - values/valkey.yaml
+
+  - name: postgres
+    namespace: gatekeeper
+    chart: ./charts/cluster-cnpg
+    needs:
+      - cnpg-system/cnpg
+
+  - name: temporal
+    namespace: gatekeeper
+    chart: temporal/temporal
+    version: 1.7.0
+    values:
+      - values/temporal.yaml
+    needs:
+      - gatekeeper/postgres
+
+  - name: cerbos-policies
+    namespace: gatekeeper
+    chart: ./cerbos
+
+  - name: cerbos
+    namespace: gatekeeper
+    chart: cerbos/cerbos
+    version: 0.57.0
+    values:
+      - values/cerbos.yaml
+    needs:
+      - gatekeeper/cerbos-policies
+
+  - name: zitadel
+    namespace: gatekeeper
+    chart: zitadel/zitadel
+    version: 10.4.0
+    values:
+      - values/zitadel.yaml
+    needs:
+      - gatekeeper/postgres
+
+  - name: gatekeeper
+    namespace: gatekeeper
+    chart: ./charts/gatekeeper
+    needs:
+      - gatekeeper/postgres
+      - gatekeeper/valkey
+      - gatekeeper/temporal
+      - gatekeeper/cerbos

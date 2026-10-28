@@ -23,12 +23,12 @@ jobs:
         with:
           fetch-depth: 0
       - run: curl -sSL https://strix.ai/install | bash
-      - name: Strix (codigo do Revamp)
+      - name: Strix (codigo do gatekeeper)
         env:
           STRIX_LLM: ${{ secrets.STRIX_LLM }}
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
           STRIX_TELEMETRY: "0"
-        run: strix -n -t ./agentflowdemo-revamp --scan-mode quick --fail-on high --max-budget 5
+        run: strix -n -t ./gatekeeper --scan-mode quick --fail-on high --max-budget 5
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -42,13 +42,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: curl -sSL https://strix.ai/install | bash
-      - name: Strix (app em execucao no cluster + manifests do Revamp)
+      - name: Strix (app em execucao no cluster e manifests)
         env:
           STRIX_LLM: ${{ secrets.STRIX_LLM }}
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
           STRIX_TELEMETRY: "0"
           ALVO: ${{ inputs.alvo_cluster }}
-        run: strix -n -t ./agentflowdemo-revamp/deploy -t "$ALVO" --scan-mode standard --fail-on high --max-budget 15
+        run: strix -n -t ./gatekeeper/deploy -t "$ALVO" --scan-mode standard --fail-on high --max-budget 15
       - uses: actions/upload-artifact@v4
         if: always()
         with:

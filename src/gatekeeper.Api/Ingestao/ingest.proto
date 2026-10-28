@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package gatekeeper.ingest.v1;
+
+option csharp_namespace = "gatekeeper.Api.Ingestao";
+
+message LogEvent {
+  string correlation = 1;
+  string subject = 2;
+  string organization_id = 3;
+  string method = 4;
+  string path = 5;
+  int32 status = 6;
+  int64 latency_ms = 7;
+}
+
+message AuditEvent {
+  string actor = 1;
+  string action = 2;
+  string resource = 3;
+  string outcome = 4;
+  string correlation = 5;
+}
+
+message IngestAck {
+  bool accepted = 1;
+  string detail = 2;
+}
+
+service Ingest {
+  rpc PublishLog(LogEvent) returns (IngestAck);
+  rpc PublishLogs(stream LogEvent) returns (IngestAck);
+  rpc PublishAudit(AuditEvent) returns (IngestAck);
+  rpc PublishAudits(stream AuditEvent) returns (IngestAck);
+}

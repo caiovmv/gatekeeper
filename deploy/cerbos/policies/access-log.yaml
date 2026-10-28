@@ -1,0 +1,12 @@
+---
+apiVersion: api.cerbos.dev/v1
+resourcePolicy:
+  version: default
+  resource: access-log
+  rules:
+    - actions: ["read"]
+      effect: EFFECT_ALLOW
+      roles: ["admin", "Staff.Admin", "support", "Staff.Support", "auditor", "Staff.Auditor"]
+    - actions: ["ingest"]
+      effect: EFFECT_ALLOW
+      roles: ["admin", "Staff.Admin"]

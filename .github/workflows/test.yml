@@ -9,10 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: agentflowdemo-revamp
+        working-directory: gatekeeper
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: "10.0.x"
-      - run: dotnet test Agent.slnx --nologo
+      - run: dotnet test gatekeeper.slnx --nologo

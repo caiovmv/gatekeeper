@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<ItemGroup>
+		<PackageReference Include="AWSSDK.S3" />
+		<PackageReference Include="Dapper" />
+		<PackageReference Include="StackExchange.Redis" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
+		<PackageReference Include="NATS.Client.JetStream" />
+		<PackageReference Include="Temporalio" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\gatekeeper.Application\gatekeeper.Application.csproj" />
+	</ItemGroup>
+
+</Project>

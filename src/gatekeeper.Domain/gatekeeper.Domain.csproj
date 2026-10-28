@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<!-- Sem pacote e sem referencia. Entidade, erro e resultado nao conhecem HTTP, banco nem log. -->
+
+</Project>

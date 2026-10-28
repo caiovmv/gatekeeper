@@ -1,0 +1,91 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gatekeeper
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gatekeeper
+  template:
+    metadata:
+      labels:
+        app: gatekeeper
+    spec:
+      containers:
+        - name: api
+          image: {{ .Values.imagem | quote }}
+          imagePullPolicy: {{ .Values.pullPolicy | default "IfNotPresent" }}
+          ports:
+            - name: http
+              containerPort: 8080
+          env:
+            - name: ASPNETCORE_URLS
+              value: http://+:8080
+            - name: App__Perfil
+              value: {{ .Values.perfil | default "teste" | quote }}
+            - name: Identity__Issuer
+              value: {{ .Values.identityIssuer | quote }}
+            - name: Authorization__Endpoint
+              value: {{ .Values.authorizationEndpoint | quote }}
+            - name: Authorization__Username
+              value: {{ .Values.authorizationUsername | quote }}
+            - name: Authorization__Password
+              value: {{ .Values.authorizationPassword | quote }}
+            - name: Identity__ServiceToken
+              valueFrom:
+                secretKeyRef:
+                  name: gatekeeper-identity
+                  key: serviceToken
+                  optional: true
+            - name: Identity__ProjectId
+              valueFrom:
+                secretKeyRef:
+                  name: gatekeeper-identity
+                  key: projectId
+                  optional: true
+            - name: Identity__OrganizationId
+              valueFrom:
+                secretKeyRef:
+                  name: gatekeeper-identity
+                  key: organizationId
+                  optional: true
+            - name: Database__Provider
+              value: PostgreSQL
+            - name: Caching__Provider
+              value: Valkey
+            - name: Files__Provider
+              value: Wasabi
+            - name: Files__Region
+              value: us-east-1
+            - name: Files__Endpoint
+              value: https://s3.us-east-1.wasabisys.com
+            - name: Files__Bucket
+              value: {{ .Values.bucket | quote }}
+            - name: Files__ForcePathStyle
+              value: "false"
+            - name: Workflows__Endpoint
+              value: temporal-frontend:7233
+            - name: Workflows__Namespace
+              value: default
+            - name: Workflows__Queue
+              value: gatekeeper
+          envFrom:
+            - secretRef:
+                name: gatekeeper
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 20
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi

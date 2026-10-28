@@ -1,0 +1,36 @@
+principals:
+  admin:
+    id: usuario-admin
+    roles: ["flowable.admin"]
+    attr:
+      organization: org-1
+  modeler:
+    id: usuario-modeler
+    roles: ["flowable.modeler"]
+    attr:
+      organization: org-1
+  operator:
+    id: usuario-operator
+    roles: ["flowable.operator"]
+    attr:
+      organization: org-1
+  worker:
+    id: usuario-worker
+    roles: ["flowable.worker"]
+    attr:
+      organization: org-1
+  auditor:
+    id: usuario-auditor
+    roles: ["flowable.auditor"]
+    attr:
+      organization: org-1
+  semPapel:
+    id: usuario-sem-papel
+    roles: ["user"]
+    attr:
+      organization: org-1
+  adminOutraOrg:
+    id: admin-outra-org
+    roles: ["flowable.admin"]
+    attr:
+      organization: org-2

@@ -1,0 +1,49 @@
+replicaCount: 1
+image:
+  repository: ghcr.io/zitadel/zitadel
+  tag: v4.20.0
+postgresql:
+  enabled: false
+zitadel:
+  masterkey: MasterkeyForLocalZitadel00000000
+  configmapConfig:
+    ExternalSecure: false
+    ExternalDomain: localhost
+    ExternalPort: 8080
+    TLS:
+      Enabled: false
+    Database:
+      Postgres:
+        Host: postgres-rw.gatekeeper.svc
+        Port: 5432
+        Database: zitadel
+        User:
+          Username: zitadel
+          SSL:
+            Mode: disable
+        Admin:
+          Username: zitadel
+          SSL:
+            Mode: disable
+    FirstInstance:
+      Org:
+        Machine:
+          Machine:
+            Username: iam-admin
+            Name: Automatically Initialized IAM Admin
+          MachineKey:
+            ExpirationDate: "2029-01-01T00:00:00Z"
+            Type: 1
+            Path: /machinekey/sa.json
+          Pat:
+            ExpirationDate: "2029-01-01T00:00:00Z"
+            Path: /machinekey/pat
+  secretConfig:
+    Database:
+      Postgres:
+        User:
+          Password: zitadel-dev
+        Admin:
+          Password: zitadel-dev
+login:
+  enabled: true

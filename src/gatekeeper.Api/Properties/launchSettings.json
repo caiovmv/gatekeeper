@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "gatekeeper.Api": {
+      "commandName": "Project",
+      "applicationUrl": "http://localhost:5199",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

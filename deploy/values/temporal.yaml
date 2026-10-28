@@ -1,0 +1,42 @@
+server:
+  image:
+    tag: "1.32.1"
+  replicaCount: 1
+  config:
+    namespaces:
+      create: true
+    persistence:
+      defaultStore: default
+      visibilityStore: visibility
+      numHistoryShards: 4
+      datastores:
+        default:
+          sql:
+            createDatabase: false
+            manageSchema: true
+            pluginName: postgres12
+            driverName: postgres12
+            databaseName: temporal
+            connectAddr: postgres-rw.gatekeeper.svc:5432
+            connectProtocol: tcp
+            user: temporal
+            password: temporal-dev
+        visibility:
+          sql:
+            createDatabase: false
+            manageSchema: true
+            pluginName: postgres12
+            driverName: postgres12
+            databaseName: temporal_visibility
+            connectAddr: postgres-rw.gatekeeper.svc:5432
+            connectProtocol: tcp
+            user: temporal
+            password: temporal-dev
+admintools:
+  image:
+    tag: "1.32.1"
+web:
+  enabled: true
+  replicaCount: 1
+schema:
+  useHelmHooks: true
