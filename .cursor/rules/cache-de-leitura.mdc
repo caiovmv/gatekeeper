@@ -1,0 +1,31 @@
+---
+description: Cache de leitura da API e da console, com despejo na escrita e prazo de 5 minutos
+alwaysApply: true
+---
+
+# Cache de leitura
+
+Vale para `agentflowdemo-revamp`. GET autenticado de JSON fica em cache por no máximo 5 minutos. POST, PUT, PATCH e DELETE com sucesso despejam as etiquetas do recurso. A resposta continua `Cache-Control: no-store`.
+
+## API
+
+- Família nova entra em `MapaDeEtiquetas` antes do endpoint existir.
+- GET `2xx` `application/json` grava e responde `X-Cache-Tags`. Mutação `2xx` responde `X-Cache-Evict` e apaga essas etiquetas. Falha não apaga.
+- A chave inclui organização, sujeito e papéis, ou o hash da credencial. Duas chaves não compartilham entrada.
+- Fora do cache: `/health`, `/api/account`, federação, WebSocket, gRPC, OpenAPI e chamada anônima.
+- Prazo único: `PoliticaDeCache.Validade`. Corpo acima de 256 KB não entra.
+
+## Console
+
+- Ler e gravar por `load`, `save`, `post` e `remove`. Guardar só quando vier `X-Cache-Tags`. Apagar o que `X-Cache-Evict` listar.
+- Memória da aba. Logout e troca de token esvaziam. Registro de API não vai para `localStorage` nem `sessionStorage`.
+- Esqueleto na primeira carga. Acerto de cache mostra os registros direto.
+
+## Design system
+
+A seção Freshness de `console/design.md` descreve o que a pessoa vê. Se o prazo ou o despejo mudar, atualize essa seção no mesmo trabalho.
+
+```csharp
+// GET /api/plans -> X-Cache-Tags: plans
+// PUT /api/plans/{id} 2xx -> X-Cache-Evict: plans,audit
+```

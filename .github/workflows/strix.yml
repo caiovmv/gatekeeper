@@ -1,0 +1,56 @@
+name: strix
+
+on:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      alvo_cluster:
+        description: "URL do app exposta pelo cluster (somente ambiente autorizado)"
+        required: true
+      confirmo_autorizacao:
+        description: "Digite SIM: tenho autorizacao escrita para testar este alvo"
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  codigo:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - run: curl -sSL https://strix.ai/install | bash
+      - name: Strix (codigo do Revamp)
+        env:
+          STRIX_LLM: ${{ secrets.STRIX_LLM }}
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          STRIX_TELEMETRY: "0"
+        run: strix -n -t ./agentflowdemo-revamp --scan-mode quick --fail-on high --max-budget 5
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: strix-codigo
+          path: strix_runs/
+
+  cluster:
+    if: github.event_name == 'workflow_dispatch' && inputs.confirmo_autorizacao == 'SIM'
+    runs-on: ubuntu-latest
+    environment: strix-cluster
+    steps:
+      - uses: actions/checkout@v4
+      - run: curl -sSL https://strix.ai/install | bash
+      - name: Strix (app em execucao no cluster + manifests do Revamp)
+        env:
+          STRIX_LLM: ${{ secrets.STRIX_LLM }}
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          STRIX_TELEMETRY: "0"
+          ALVO: ${{ inputs.alvo_cluster }}
+        run: strix -n -t ./agentflowdemo-revamp/deploy -t "$ALVO" --scan-mode standard --fail-on high --max-budget 15
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: strix-cluster
+          path: strix_runs/
